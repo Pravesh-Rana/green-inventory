@@ -7,6 +7,7 @@ Flask-WTF
 Flask-Migrate
 python-dotenv
 gunicorn
+Faker
 
 # Background Scheduler
 APScheduler

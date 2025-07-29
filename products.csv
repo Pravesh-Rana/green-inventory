@@ -1,0 +1,51 @@
+ProductID,ProductName,Category,CostPrice,SellingPrice
+1,Organic Milk 1L v1,Meat,14.5,26.53
+2,Free-Range Eggs (12) v2,Pantry,5.99,14.05
+3,Chicken Breast 500g v3,Pantry,7.29,12.35
+4,Free-Range Eggs (12) v4,Snacks,14.98,14.55
+5,Sourdough Bread v5,Dairy,2.35,10.14
+6,Chicken Breast 500g v6,Snacks,14.74,9.0
+7,Avocado v7,Bakery,1.41,23.31
+8,Organic Tomatoes v8,Meat,11.0,15.12
+9,Avocado v9,Meat,12.48,29.22
+10,Basmati Rice 1kg v10,Produce,12.22,8.22
+11,Organic Milk 1L v11,Produce,6.82,2.67
+12,Chicken Breast 500g v12,Snacks,10.76,25.11
+13,Chicken Breast 500g v13,Dairy,7.65,7.89
+14,Granny Smith Apples v14,Meat,12.61,24.22
+15,Chicken Breast 500g v15,Snacks,6.5,9.11
+16,Avocado v16,Produce,12.07,12.11
+17,Free-Range Eggs (12) v17,Pantry,10.26,24.45
+18,Organic Tomatoes v18,Produce,3.9,22.33
+19,Free-Range Eggs (12) v19,Bakery,1.75,26.49
+20,Dark Chocolate Bar v20,Snacks,12.64,27.13
+21,Sourdough Bread v21,Snacks,13.98,8.3
+22,Cheddar Cheese 250g v22,Pantry,12.82,6.23
+23,Dark Chocolate Bar v23,Snacks,9.18,18.45
+24,Dark Chocolate Bar v24,Pantry,11.5,12.8
+25,Sourdough Bread v25,Meat,11.23,20.91
+26,Granny Smith Apples v26,Dairy,1.63,20.81
+27,Cheddar Cheese 250g v27,Bakery,2.43,20.78
+28,Dark Chocolate Bar v28,Snacks,4.0,7.52
+29,Basmati Rice 1kg v29,Produce,1.55,26.49
+30,Granny Smith Apples v30,Meat,7.71,5.26
+31,Basmati Rice 1kg v31,Bakery,1.69,26.56
+32,Free-Range Eggs (12) v32,Dairy,13.81,23.63
+33,Free-Range Eggs (12) v33,Meat,14.36,2.17
+34,Chicken Breast 500g v34,Snacks,6.04,23.51
+35,Organic Milk 1L v35,Produce,11.9,24.31
+36,Sourdough Bread v36,Bakery,10.96,13.71
+37,Free-Range Eggs (12) v37,Meat,14.62,7.65
+38,Avocado v38,Bakery,5.16,10.46
+39,Dark Chocolate Bar v39,Meat,11.48,26.08
+40,Dark Chocolate Bar v40,Bakery,12.47,23.71
+41,Organic Milk 1L v41,Meat,14.5,29.79
+42,Organic Milk 1L v42,Dairy,5.66,23.13
+43,Dark Chocolate Bar v43,Pantry,9.37,23.68
+44,Sourdough Bread v44,Meat,11.21,25.92
+45,Basmati Rice 1kg v45,Snacks,1.12,14.87
+46,Cheddar Cheese 250g v46,Bakery,4.09,19.98
+47,Organic Milk 1L v47,Dairy,9.6,12.89
+48,Organic Tomatoes v48,Meat,8.02,12.77
+49,Cheddar Cheese 250g v49,Produce,9.4,28.26
+50,Free-Range Eggs (12) v50,Dairy,7.79,21.05
