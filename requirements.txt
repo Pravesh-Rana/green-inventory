@@ -6,7 +6,7 @@ Flask-SQLAlchemy
 Flask-WTF
 Flask-Migrate
 python-dotenv
-gunicornyes
+gunicorn
 
 # Background Scheduler
 APScheduler
