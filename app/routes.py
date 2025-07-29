@@ -1,4 +1,4 @@
-# app/routes.py (Final Corrected Version)
+# app/routes.py (Updated with 2-Day Expiry Logic)
 
 from flask import render_template, flash, redirect, url_for, request, jsonify, Blueprint, Response
 from app import db
@@ -13,22 +13,34 @@ from .scheduler import get_carbon_footprint_from_gemini
 
 bp = Blueprint('main', __name__)
 
+# --- Dashboard Route (UPDATED) ---
 @bp.route('/')
 @bp.route('/dashboard')
 def dashboard():
-    expiring_items = InventoryItem.query.filter(InventoryItem.expiry_date <= date.today() + timedelta(days=7), InventoryItem.expiry_date >= date.today(), InventoryItem.is_sold == False).all()
+    # THE CHANGE IS HERE: Changed timedelta(days=7) to timedelta(days=2)
+    expiring_items = InventoryItem.query.filter(
+        InventoryItem.expiry_date <= date.today() + timedelta(days=2),
+        InventoryItem.expiry_date >= date.today(),
+        InventoryItem.is_sold == False
+    ).all()
+
     expiring_summary = {}
     for item in expiring_items:
         product_name = item.product_type.name
         if product_name not in expiring_summary:
             expiring_summary[product_name] = {'count': 0, 'location': item.location, 'expiry': item.expiry_date, 'carbon': 0}
         expiring_summary[product_name]['count'] += 1
+    
     for name, data in expiring_summary.items():
         carbon_per_item = get_carbon_footprint_from_gemini(name)
-        if carbon_per_item: data['carbon'] = carbon_per_item * data['count']
+        if carbon_per_item:
+            data['carbon'] = carbon_per_item * data['count']
+
     total_items = InventoryItem.query.filter_by(is_sold=False).count()
     total_value = db.session.query(db.func.sum(InventoryItem.price)).filter_by(is_sold=False).scalar() or 0
     return render_template('index.html', title='Dashboard', expiring_summary=expiring_summary, total_items=total_items, total_value=total_value)
+
+# --- (The rest of the file remains the same) ---
 
 @bp.route('/manage_products', methods=['GET', 'POST'])
 def manage_products():
@@ -53,7 +65,7 @@ def delete_product_type(product_type_id):
     try:
         db.session.delete(product_to_delete)
         db.session.commit()
-        flash(f'Product Type "{product_to_delete.name}" and all its inventory have been deleted.', 'success')
+        flash(f'Product Type "{product_to_delete.name}" and all its inventory have been successfully deleted.', 'success')
     except Exception as e:
         db.session.rollback()
         flash(f'An error occurred while deleting the product: {e}', 'danger')
@@ -106,6 +118,5 @@ def download_inventory():
 def chatbot_response():
     data = request.get_json()
     question = data.get('question')
-    # THE FIX IS HERE: Only one underscore
     response = process_query_with_gemini(question)
     return jsonify({'answer': response})
