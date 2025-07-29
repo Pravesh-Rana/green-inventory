@@ -1,4 +1,4 @@
-# app/routes.py
+# app/routes.py (Final Corrected Version)
 
 from flask import render_template, flash, redirect, url_for, request, jsonify, Blueprint, Response
 from app import db
@@ -13,15 +13,10 @@ from .scheduler import get_carbon_footprint_from_gemini
 
 bp = Blueprint('main', __name__)
 
-# --- Dashboard Route ---
 @bp.route('/')
 @bp.route('/dashboard')
 def dashboard():
-    expiring_items = InventoryItem.query.filter(
-        InventoryItem.expiry_date <= date.today() + timedelta(days=7),
-        InventoryItem.expiry_date >= date.today(),
-        InventoryItem.is_sold == False
-    ).all()
+    expiring_items = InventoryItem.query.filter(InventoryItem.expiry_date <= date.today() + timedelta(days=7), InventoryItem.expiry_date >= date.today(), InventoryItem.is_sold == False).all()
     expiring_summary = {}
     for item in expiring_items:
         product_name = item.product_type.name
@@ -35,7 +30,6 @@ def dashboard():
     total_value = db.session.query(db.func.sum(InventoryItem.price)).filter_by(is_sold=False).scalar() or 0
     return render_template('index.html', title='Dashboard', expiring_summary=expiring_summary, total_items=total_items, total_value=total_value)
 
-# --- Product Management Routes ---
 @bp.route('/manage_products', methods=['GET', 'POST'])
 def manage_products():
     form = CreateProductTypeForm()
@@ -53,22 +47,18 @@ def manage_products():
     products = ProductType.query.order_by(ProductType.id).all()
     return render_template('manage_products.html', title="Manage Product Types", products=products, form=form)
 
-# --- NEW FUNCTION TO DELETE PRODUCTS ---
 @bp.route('/delete_product_type/<int:product_type_id>', methods=['POST'])
 def delete_product_type(product_type_id):
     product_to_delete = ProductType.query.get_or_404(product_type_id)
     try:
-        # Because we set up cascading deletes in our database model,
-        # deleting the ProductType will automatically delete all of its associated InventoryItems.
         db.session.delete(product_to_delete)
         db.session.commit()
-        flash(f'Product Type "{product_to_delete.name}" and all its inventory have been successfully deleted.', 'success')
+        flash(f'Product Type "{product_to_delete.name}" and all its inventory have been deleted.', 'success')
     except Exception as e:
         db.session.rollback()
         flash(f'An error occurred while deleting the product: {e}', 'danger')
     return redirect(url_for('main.manage_products'))
 
-# --- Stock & Sales Routes ---
 @bp.route('/add_stock', methods=['GET', 'POST'])
 def add_stock():
     form = AddStockForm()
@@ -103,7 +93,6 @@ def sales_terminal():
         return redirect(url_for('main.sales_terminal'))
     return render_template('sales_terminal.html', title='Sales Terminal')
 
-# --- Download Inventory Route ---
 @bp.route('/download_inventory')
 def download_inventory():
     items_in_stock = db.session.query(InventoryItem.unique_rfid_tag, ProductType.name, InventoryItem.price, InventoryItem.stock_in_date, InventoryItem.expiry_date, InventoryItem.location).join(ProductType).filter(InventoryItem.is_sold == False).order_by(ProductType.name, InventoryItem.expiry_date).all()
@@ -113,10 +102,10 @@ def download_inventory():
     csv_output.seek(0)
     return Response(csv_output, mimetype="text/csv", headers={"Content-Disposition": "attachment;filename=inventory_report.csv"})
 
-# --- Chatbot API Route ---
 @bp.route('/api/chatbot', methods=['POST'])
 def chatbot_response():
     data = request.get_json()
     question = data.get('question')
-    response = process_query_with__gemini(question)
+    # THE FIX IS HERE: Only one underscore
+    response = process_query_with_gemini(question)
     return jsonify({'answer': response})
