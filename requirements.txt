@@ -1,0 +1,27 @@
+# requirements.txt
+
+# Core Flask Framework and Extensions
+Flask
+Flask-SQLAlchemy
+Flask-WTF
+Flask-Migrate
+python-dotenv
+gunicornyes
+
+# Background Scheduler
+APScheduler
+
+# AI and Web Search
+google-generativeai
+requests
+
+# Excel/CSV Data Handling
+pandas
+openpyxl
+
+# Email Functionality
+sendgrid
+
+# For Database-Aware Dropdown Menus
+WTForms-SQLAlchemy
+

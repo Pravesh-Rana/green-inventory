@@ -1,0 +1,63 @@
+<!-- app/templates/manage_products.html -->
+{% extends "layout.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header"><h3>Add New Product Type</h3></div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('main.manage_products') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.default_price.label(class="form-label") }}
+                        {{ form.default_price(class="form-control") }}
+                    </div>
+                    {{ form.submit(class="btn btn-primary") }}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header"><h3>Existing Product Types</h3></div>
+            <div class="card-body p-0">
+                <table class="table table-striped table-hover mb-0 align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th style="width: 10%;">ID</th>
+                            <th>Name</th>
+                            <th>Default Price</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>{{ product.id }}</td>
+                            <td>{{ product.name }}</td>
+                            <td>${{ "%.2f"|format(product.default_price) }}</td>
+                            <td class="text-end">
+                                <!-- This form wraps the delete button -->
+                                <form action="{{ url_for('main.delete_product_type', product_type_id=product.id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this product? This will also delete all associated inventory items.');">
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        <i class="bi bi-trash-fill"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="4" class="text-center">No product types created yet.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

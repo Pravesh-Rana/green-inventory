@@ -1,0 +1,85 @@
+/* app/static/css/style.css */
+
+/* --- Global Styles & Fonts --- */
+:root {
+    --primary-green: #28a745;
+    --dark-green: #218838;
+    --light-gray: #f8f9fa;
+    --user-blue: #007bff;
+    --light-blue: #e7f3ff;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-gray);
+}
+
+/* --- Card & Button Enhancements --- */
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-success {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-success:hover {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+}
+
+/* --- CHATBOT BEAUTIFICATION --- */
+
+#chat-window {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Space between messages */
+    height: 400px; /* A bit taller */
+}
+
+.chat-message {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    max-width: 80%;
+}
+
+/* Style for the Bot's Messages */
+.bot-message {
+    align-self: flex-start; /* Align to the left */
+}
+
+/* Style for the User's Messages */
+.user-message {
+    align-self: flex-end; /* Align to the right */
+    flex-direction: row-reverse; /* Puts the icon on the right */
+}
+
+.message-avatar {
+    font-size: 1.5rem;
+    color: #6c757d;
+}
+
+.message-bubble {
+    padding: 0.75rem 1rem;
+    border-radius: 1.25rem;
+}
+
+.bot-message .message-bubble {
+    background-color: #e9ecef;
+    border-bottom-left-radius: 0.25rem; /* "Tailed" bubble effect */
+}
+
+.user-message .message-bubble {
+    background-color: var(--light-blue);
+    color: var(--user-blue);
+    border-bottom-right-radius: 0.25rem; /* "Tailed" bubble effect */
+}
+
+.message-content {
+    white-space: pre-wrap; /* Respects newlines in AI responses */
+}

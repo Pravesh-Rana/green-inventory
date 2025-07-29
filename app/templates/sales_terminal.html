@@ -1,0 +1,16 @@
+<!-- app/templates/sales_terminal.html -->
+{% extends "layout.html" %}
+{% block content %}
+<div class="card mx-auto" style="max-width: 500px;">
+    <div class="card-header text-center"><h3>Sales Terminal (RFID Scanner)</h3></div>
+    <div class="card-body">
+        <p class="text-muted text-center">Enter a unique RFID tag and press "Sell" to record a sale. This simulates scanning an item.</p>
+        <form method="POST" action="{{ url_for('main.sales_terminal') }}">
+            <div class="input-group mb-3">
+                <input type="text" name="rfid_tag" class="form-control" placeholder="Enter or paste RFID tag here..." autofocus>
+                <button class="btn btn-primary" type="submit">Sell Item</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+<!-- app/templates/add_stock.html -->
+{% extends "layout.html" %}
+{% block content %}
+<div class="card mx-auto" style="max-width: 600px;">
+    <div class="card-header"><h3>Receive New Stock & Generate RFID Tags</h3></div>
+    <div class="card-body">
+        <form method="POST" action="{{ url_for('main.add_stock') }}">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                {{ form.product_type.label(class="form-label") }}
+                {{ form.product_type(class="form-select") }}
+            </div>
+            <div class="mb-3">
+                {{ form.quantity.label(class="form-label") }}
+                {{ form.quantity(class="form-control") }}
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    {{ form.stock_in_date.label(class="form-label") }}
+                    {{ form.stock_in_date(class="form-control") }}
+                </div>
+                <div class="col-md-6">
+                    {{ form.expiry_date.label(class="form-label") }}
+                    {{ form.expiry_date(class="form-control") }}
+                </div>
+            </div>
+            <div class="mb-3">
+                {{ form.location.label(class="form-label") }}
+                {{ form.location(class="form-control") }}
+            </div>
+            {{ form.submit(class="btn btn-success w-100") }}
+        </form>
+    </div>
+</div>
+{% endblock %}
