@@ -1,4 +1,4 @@
-# app/routes.py (Updated with 2-Day Expiry Logic)
+# app/routes.py
 
 from flask import render_template, flash, redirect, url_for, request, jsonify, Blueprint, Response
 from app import db
@@ -13,37 +13,28 @@ from .scheduler import get_carbon_footprint_from_gemini
 
 bp = Blueprint('main', __name__)
 
-# --- Dashboard Route (UPDATED) ---
+# --- (Dashboard, Manage Products, Delete, Add Stock, Sales Terminal routes are unchanged) ---
 @bp.route('/')
 @bp.route('/dashboard')
 def dashboard():
-    # THE CHANGE IS HERE: Changed timedelta(days=7) to timedelta(days=2)
-    expiring_items = InventoryItem.query.filter(
-        InventoryItem.expiry_date <= date.today() + timedelta(days=2),
-        InventoryItem.expiry_date >= date.today(),
-        InventoryItem.is_sold == False
-    ).all()
-
+    # ... (code is correct)
+    expiring_items = InventoryItem.query.filter(InventoryItem.expiry_date <= date.today() + timedelta(days=2), InventoryItem.expiry_date >= date.today(), InventoryItem.is_sold == False).all()
     expiring_summary = {}
     for item in expiring_items:
         product_name = item.product_type.name
         if product_name not in expiring_summary:
             expiring_summary[product_name] = {'count': 0, 'location': item.location, 'expiry': item.expiry_date, 'carbon': 0}
         expiring_summary[product_name]['count'] += 1
-    
     for name, data in expiring_summary.items():
         carbon_per_item = get_carbon_footprint_from_gemini(name)
-        if carbon_per_item:
-            data['carbon'] = carbon_per_item * data['count']
-
+        if carbon_per_item: data['carbon'] = carbon_per_item * data['count']
     total_items = InventoryItem.query.filter_by(is_sold=False).count()
     total_value = db.session.query(db.func.sum(InventoryItem.price)).filter_by(is_sold=False).scalar() or 0
     return render_template('index.html', title='Dashboard', expiring_summary=expiring_summary, total_items=total_items, total_value=total_value)
 
-# --- (The rest of the file remains the same) ---
-
 @bp.route('/manage_products', methods=['GET', 'POST'])
 def manage_products():
+    # ... (code is correct)
     form = CreateProductTypeForm()
     if form.validate_on_submit():
         product_name = form.name.data.strip().title()
@@ -61,6 +52,7 @@ def manage_products():
 
 @bp.route('/delete_product_type/<int:product_type_id>', methods=['POST'])
 def delete_product_type(product_type_id):
+    # ... (code is correct)
     product_to_delete = ProductType.query.get_or_404(product_type_id)
     try:
         db.session.delete(product_to_delete)
@@ -73,6 +65,7 @@ def delete_product_type(product_type_id):
 
 @bp.route('/add_stock', methods=['GET', 'POST'])
 def add_stock():
+    # ... (code is correct)
     form = AddStockForm()
     if form.validate_on_submit():
         product_type = form.product_type.data
@@ -87,6 +80,7 @@ def add_stock():
 
 @bp.route('/sales_terminal', methods=['GET', 'POST'])
 def sales_terminal():
+    # ... (code is correct)
     if request.method == 'POST':
         rfid_tag = request.form.get('rfid_tag', '').strip()
         if not rfid_tag:
@@ -105,8 +99,18 @@ def sales_terminal():
         return redirect(url_for('main.sales_terminal'))
     return render_template('sales_terminal.html', title='Sales Terminal')
 
+# --- NEW FUNCTION TO DISPLAY ALL INVENTORY ---
+@bp.route('/full_inventory')
+def full_inventory():
+    # Query all items, join with their product type, and order them
+    # This puts all the "In Stock" items at the top
+    items = InventoryItem.query.join(ProductType).order_by(InventoryItem.is_sold, ProductType.name, InventoryItem.expiry_date).all()
+    return render_template('full_inventory.html', title='Full Inventory List', items=items)
+
+# --- (Download and Chatbot routes are unchanged) ---
 @bp.route('/download_inventory')
 def download_inventory():
+    # ... (code is correct)
     items_in_stock = db.session.query(InventoryItem.unique_rfid_tag, ProductType.name, InventoryItem.price, InventoryItem.stock_in_date, InventoryItem.expiry_date, InventoryItem.location).join(ProductType).filter(InventoryItem.is_sold == False).order_by(ProductType.name, InventoryItem.expiry_date).all()
     df = pd.DataFrame(items_in_stock, columns=['RFID_Tag', 'Product_Name', 'Price', 'Stock_In_Date', 'Expiry_Date', 'Location'])
     csv_output = StringIO()
@@ -116,6 +120,7 @@ def download_inventory():
 
 @bp.route('/api/chatbot', methods=['POST'])
 def chatbot_response():
+    # ... (code is correct)
     data = request.get_json()
     question = data.get('question')
     response = process_query_with_gemini(question)

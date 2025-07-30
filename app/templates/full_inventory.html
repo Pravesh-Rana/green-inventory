@@ -1,0 +1,61 @@
+<!-- app/templates/full_inventory.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1>Full Inventory List (All Items)</h1>
+        <p class="text-muted mb-0">Use this list to find a valid RFID tag for an "In Stock" item to test the Sales Terminal.</p>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped table-hover mb-0 align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Product Name</th>
+                    <th>RFID Tag (Click to Copy)</th>
+                    <th>Expiry Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.product_type.name }}</td>
+                    <td>
+                        <!-- The copy button and the tag -->
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-sm" id="rfid-{{ item.id }}" value="{{ item.unique_rfid_tag }}" readonly>
+                            <button class="btn btn-outline-secondary btn-sm" onclick="copyTag('rfid-{{ item.id }}')">
+                                <i class="bi bi-clipboard"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>{{ item.expiry_date.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        {% if item.is_sold %}
+                            <span class="badge bg-secondary">Sold</span>
+                        {% else %}
+                            <span class="badge bg-success">In Stock</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="4" class="text-center">No inventory items found. Go to "Receive Stock" to add some.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Simple JavaScript for the copy to clipboard functionality -->
+<script>
+    function copyTag(inputId) {
+        const input = document.getElementById(inputId);
+        input.select();
+        document.execCommand('copy');
+        alert('RFID Tag copied to clipboard!');
+    }
+</script>
+{% endblock %}
