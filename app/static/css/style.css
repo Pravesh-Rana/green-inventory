@@ -1,67 +1,116 @@
-/* app/static/css/style.css */
+/* app/static/css/style.css (New "Deloitte" Theme) */
 
-/* --- Global Styles & Fonts --- */
+/* --- 1. Core Theme & Color Palette --- */
 :root {
-    --primary-green: #28a745;
-    --dark-green: #218838;
-    --light-gray: #f8f9fa;
-    --user-blue: #007bff;
-    --light-blue: #e7f3ff;
+    --theme-bg: #121212; /* A very dark gray, softer than pure black */
+    --card-bg: #1e1e1e; /* A slightly lighter gray for cards */
+    --theme-green: #7CFC00; /* A vibrant lime green, like the slide */
+    --theme-text: #e0e0e0; /* A soft white for text */
+    --border-color: #333;
+    --user-blue: #0d6efd;
+    --light-blue: #084298;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: var(--light-gray);
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+    position: relative; /* Needed for the background pattern */
 }
 
-/* --- Card & Button Enhancements --- */
+/* --- 2. Background Dot-Matrix Pattern --- */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 30%;
+    z-index: -1; /* Place it behind all content */
+    background-image: radial-gradient(var(--border-color) 1px, transparent 1px);
+    background-size: 15px 15px;
+    -webkit-mask-image: linear-gradient(to left, black 60%, transparent 100%);
+    mask-image: linear-gradient(to left, black 60%, transparent 100%);
+}
+
+
+/* --- 3. Component Styling --- */
+.navbar {
+    background-color: var(--card-bg) !important;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.navbar-brand {
+    color: var(--theme-green) !important;
+}
+
 .card {
-    border: none;
-    border-radius: 0.75rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    color: var(--theme-text);
+}
+
+.card-header {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .btn-success {
-    background-color: var(--primary-green);
-    border-color: var(--primary-green);
-    transition: background-color 0.2s ease-in-out;
+    background-color: var(--theme-green);
+    border-color: var(--theme-green);
+    color: #000;
+    font-weight: 600;
 }
 
-.btn-success:hover {
-    background-color: var(--dark-green);
-    border-color: var(--dark-green);
+.btn-primary {
+    background-color: var(--user-blue);
+    border-color: var(--user-blue);
 }
 
-/* --- CHATBOT BEAUTIFICATION --- */
+.table {
+    --bs-table-bg: var(--card-bg);
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+    --bs-table-hover-bg: rgba(255, 255, 255, 0.07);
+    --bs-table-color: var(--theme-text);
+    --bs-table-border-color: var(--border-color);
+}
 
+.form-control, .form-select {
+    background-color: #2a2a2a;
+    color: var(--theme-text);
+    border: 1px solid var(--border-color);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #2a2a2a;
+    color: var(--theme-text);
+    border-color: var(--theme-green);
+    box-shadow: 0 0 0 0.25rem rgba(124, 252, 0, 0.25);
+}
+
+/* --- 4. Chatbot Beautification (Dark Theme) --- */
 #chat-window {
     display: flex;
     flex-direction: column;
-    gap: 1rem; /* Space between messages */
-    height: 400px; /* A bit taller */
+    gap: 1rem;
+    height: 400px;
 }
 
 .chat-message {
     display: flex;
     align-items: flex-end;
     gap: 0.75rem;
-    max-width: 80%;
+    max-width: 85%;
 }
 
-/* Style for the Bot's Messages */
-.bot-message {
-    align-self: flex-start; /* Align to the left */
-}
-
-/* Style for the User's Messages */
-.user-message {
-    align-self: flex-end; /* Align to the right */
-    flex-direction: row-reverse; /* Puts the icon on the right */
-}
+.bot-message { align-self: flex-start; }
+.user-message { align-self: flex-end; flex-direction: row-reverse; }
 
 .message-avatar {
     font-size: 1.5rem;
-    color: #6c757d;
+    color: #999;
 }
 
 .message-bubble {
@@ -70,16 +119,16 @@ body {
 }
 
 .bot-message .message-bubble {
-    background-color: #e9ecef;
-    border-bottom-left-radius: 0.25rem; /* "Tailed" bubble effect */
+    background-color: #2a2a2a;
+    border-bottom-left-radius: 0.25rem;
 }
 
 .user-message .message-bubble {
     background-color: var(--light-blue);
-    color: var(--user-blue);
-    border-bottom-right-radius: 0.25rem; /* "Tailed" bubble effect */
+    color: #fff;
+    border-bottom-right-radius: 0.25rem;
 }
 
 .message-content {
-    white-space: pre-wrap; /* Respects newlines in AI responses */
+    white-space: pre-wrap;
 }
