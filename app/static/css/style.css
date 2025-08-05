@@ -132,3 +132,6 @@ body::before {
 .message-content {
     white-space: pre-wrap;
 }
+.text-muted {
+    color: #13c466 !important; /* A standard light gray from Bootstrap */
+}
