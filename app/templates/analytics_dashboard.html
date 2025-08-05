@@ -1,0 +1,15 @@
+<!-- app/templates/analytics_dashboard.html -->
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h1>Business Intelligence Dashboard</h1>
+        <p class="text-muted mb-0">Live analytics powered by Microsoft Power BI.</p>
+    </div>
+    <div class="card-body p-1">
+        <!-- Your specific Power BI dashboard is embedded here -->
+        <iframe title="Capstone" width="100%" height="700" src="https://app.fabric.microsoft.com/view?r=eyJrIjoiNTRjMTczMGItNmI4My00NWE4LWI1M2EtYTUyY2U2YjY0YmQ2IiwidCI6IjM3ZTM3OGM4LTU0YzAtNGJhYS1hZmIyLWEwZjFiODMyYTE5OSIsImMiOjh9" frameborder="0" allowFullScreen="true"></iframe>
+    </div>
+</div>
+{% endblock %}

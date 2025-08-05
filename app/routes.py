@@ -32,6 +32,11 @@ def dashboard():
     total_value = db.session.query(db.func.sum(InventoryItem.price)).filter_by(is_sold=False).scalar() or 0
     return render_template('index.html', title='Dashboard', expiring_summary=expiring_summary, total_items=total_items, total_value=total_value)
 
+# --- NEW ROUTE for the Power BI Dashboard ---
+@bp.route('/analytics_dashboard')
+def analytics_dashboard():
+    return render_template('analytics_dashboard.html', title='Analytics Dashboard')
+
 @bp.route('/manage_products', methods=['GET', 'POST'])
 def manage_products():
     # ... (code is correct)
