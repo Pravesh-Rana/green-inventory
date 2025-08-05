@@ -1,4 +1,4 @@
-<!-- app/templates/layout.html -->
+<!-- app/templates/layout.html (Full-Width Version) -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -10,23 +10,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
-        <div class="container-fluid">
+        <div class="container-fluid px-4">
             <a class="navbar-brand fw-bold" href="{{ url_for('main.dashboard') }}">
                 <i class="bi bi-leaf-fill"></i> Green Inventory Pro
             </a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav">
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
-                    
-                    <!-- NEW LINK ADDED HERE -->
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('main.analytics_dashboard') }}">Analytics</a></li>
-
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('main.manage_products') }}">Manage Products</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('main.add_stock') }}">Receive Stock</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ url_for('main.sales_terminal') }}">Sales Terminal</a></li>
@@ -36,7 +33,8 @@
         </div>
     </nav>
 
-    <main class="container mt-4">
+    <!-- The 'container' class is removed and replaced with padding classes -->
+    <main class="px-4 py-5">
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             {% for category, message in messages %}
