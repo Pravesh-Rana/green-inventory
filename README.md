@@ -54,11 +54,12 @@ The artefact serves as a **proof of concept** for Deloitte’s sustainability ad
 For questions, feedback, or collaboration opportunities:  
 
 **Name**: Ankita Saxena, Pravesh Rana, Ratnesh Singh  
-**Email**: ankita.saxena@ucdconnect.ie; pravesh.rana@ucdconnect.ie 
+**Email**: ankita.saxena@ucdconnect.ie; pravesh.rana@ucdconnect.ie; ratnesh.singh@ucdconnect.ie
   
 
 ---
 
 ### 📑 Acknowledgement  
 This project was completed as part of the MSc Business Analytics programme at University College Dublin, in collaboration with Deloitte.
+
 
