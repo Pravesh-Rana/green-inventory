@@ -14,8 +14,8 @@ def get_carbon_footprint_from_gemini(product_name):
         if not api_key: return None
         genai.configure(api_key=api_key)
         
-        # THE FIX IS ON THIS LINE: Use the full, official model name
-        model = genai.GenerativeModel('gemini-1.5-flash-latest')
+        # THE FIX IS HERE: Use the universal 'gemini-pro' model
+        model = genai.GenerativeModel('gemini-pro')
         
         prompt = f"What is the estimated average carbon footprint (in kg of CO2 equivalent) for one unit of '{product_name}'? Provide only the number."
         response = model.generate_content(prompt)
@@ -26,11 +26,12 @@ def get_carbon_footprint_from_gemini(product_name):
 def check_expiring_products(app):
     with app.app_context():
         # ... (The rest of this function is correct and does not need changes)
+        # ... (it will now use the corrected get_carbon_footprint_from_gemini function)
         sender_email = app.config.get('SENDER_EMAIL')
         store_manager_email = app.config.get('STORE_MANAGER_EMAIL')
         sendgrid_api_key = app.config.get('SENDGRID_API_KEY')
         if not all([sender_email, store_manager_email, sendgrid_api_key]):
-            print("--- Email configuration (SendGrid/Recipient) is missing. ---")
+            print("--- Email configuration is missing. ---")
             return
         target_date = date.today() + timedelta(days=2)
         expiring_items = InventoryItem.query.filter(InventoryItem.expiry_date == target_date, InventoryItem.is_sold == False).all()
